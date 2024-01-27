@@ -15,14 +15,18 @@ export const Cards = (props) => {
           <div className="card-body">
             <h5 className="card-title text-start p-2">{props.name}</h5>
             <p className="card-text text-start ms-2">Gender :{props.gender}</p>
-            <p className="card-text text-start ms-2">Hair Color :{props.hairColor}</p>
-            <p className="card-text text-start ms-2">Eyes Color : {props.eyesColor}</p>
+            <p className="card-text text-start ms-2">
+              Hair Color :{props.hairColor}
+            </p>
+            <p className="card-text text-start ms-2">
+              Eyes Color : {props.eyesColor}
+            </p>
             <div className="d-flex justify-content-around">
               <Link to="/details">
                 <button className="btn btn-primary">Learn More</button>
               </Link>
               <button className="btn btn-success" onClick={handleLike}>
-                <BsHeart />
+              <i className="fa-solid fa-heart"/>
               </button>
             </div>
           </div>
