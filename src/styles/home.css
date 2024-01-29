@@ -1,0 +1,66 @@
+/* home.css */
+
+/* Main container */
+.text-center {
+    margin: 20px auto;
+    max-width: 1200px;
+  }
+  
+  /* Background */
+  body {
+    background-color: #111;
+    color: #fff;
+  }
+  
+  /* Section titles */
+  .py-3 {
+    font-size: 24px;
+  }
+  
+  /* Cards container */
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  /* Card */
+  .card {
+    background-color: #333;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 200px;
+  }
+  
+  .card img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px 10px 0 0;
+  }
+  
+  .card-body {
+    padding: 15px;
+  }
+  
+  .card-title {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  /* Like button */
+  .like-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .like-btn:hover {
+    background-color: #0056b3;
+  }
+  

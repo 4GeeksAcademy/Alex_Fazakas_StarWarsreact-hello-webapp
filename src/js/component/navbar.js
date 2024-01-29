@@ -16,7 +16,7 @@ export const Navbar = ({ likedCards, setLikedCards }) => {
   return (
     <>
       <nav className="navbar navbar-light bg-light mb-3">
-        <span className="navbar-brand mb-0 h1 ms-3">StarWars</span>
+        <span className="navbar-brand mb-0 h1 ms-3"></span>
         <div className="ml-auto">
           <button className="btn btn-secondary me-3" onClick={handleShow}>
             Favs ({likedCards.length})
