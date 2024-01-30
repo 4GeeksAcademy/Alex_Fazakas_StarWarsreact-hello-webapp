@@ -1,11 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../styles/home.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
+import "../../styles/home.css";
 
 export const Details = () => {
-    
+    const location= useLocation();
+    const {type, id} = useParams();
+    const [details, setDetails] = useState(null);
+    useEffect(()=>{
+
+        
+
+        console.log(location.pathname)
+    },[]
+    );
     return (
         <div className="container">
+            <Link to={"/home"}>
+                <button>Home</button>
+            </Link>
         <div className="card mb-3" style={{ maxWidth: "100%" }}>
             <div className="row g-0">
                 <div className="col-md-4">

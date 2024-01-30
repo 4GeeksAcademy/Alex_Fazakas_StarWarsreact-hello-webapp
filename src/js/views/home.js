@@ -42,9 +42,9 @@ export const Home = () => {
 
   const vehiclesId = store.vehicles.map ((x)=> x.uid)
 
-  const imgUrlPlanets = (planetsId)=> {
-    return `https://starwars-visualguide.com/assets/img/planets/${planetsId}.jpg`
-  }
+  const imgUrlPlanets = (planetsId) => {
+    return `https://starwars-visualguide.com/assets/img/planets/${planetsId === "1" ? "8" : planetsId}.jpg`;
+};
 
   const imgUrlVehicles = (vehiclesId)=> {
     return `https://starwars-visualguide.com/assets/img/vehicles/${vehiclesId}.jpg`
@@ -68,7 +68,6 @@ export const Home = () => {
             image={imgUrl(x.uid)}
             onLike={(name) => setLikedCards([...likedCards, name])}
           />)}
-          
         </div>
       </div>
 

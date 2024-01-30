@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
+import {starWarsLogo} from "../../img/starWarsLogo.webp"
 
 export const Navbar = ({ likedCards, setLikedCards }) => {
   const [show, setShow] = useState(false);
@@ -16,6 +17,7 @@ export const Navbar = ({ likedCards, setLikedCards }) => {
   return (
     <>
       <nav className="navbar navbar-light bg-light mb-3">
+      <img src={"https://ams3.digitaloceanspaces.com/graffica/2023/02/starwars1vs2-e1669205975149-1024x297-2.png"} alt="Star Wars Logo" className="navbar-brand-logo me-3" style={{width:"200px"}} />
         <span className="navbar-brand mb-0 h1 ms-3"></span>
         <div className="ml-auto">
           <button className="btn btn-secondary me-3" onClick={handleShow}>

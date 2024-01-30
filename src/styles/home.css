@@ -9,7 +9,7 @@
   /* Background */
   body {
     background-color: #111;
-    color: #fff;
+    color: #dc590e;
   }
   
   /* Section titles */
@@ -62,5 +62,11 @@
   
   .like-btn:hover {
     background-color: #0056b3;
+  }
+
+
+  .link-btn{
+    font-size: 200px;
+    font-weight: bold;
   }
   
