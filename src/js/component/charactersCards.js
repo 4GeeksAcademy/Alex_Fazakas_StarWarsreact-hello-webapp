@@ -16,11 +16,11 @@ export const Cards = (props) => {
           <div className="card-body">
             <h5 className="card-title text-start p-2">{props.name}</h5>
             <div className="d-flex justify-content-around">
-              <Link to="/details">
+              <Link to={`/details/${props.id}`}>
                 <button className="btn btn-primary">Learn More</button>
               </Link>
               <button className="btn btn-success" onClick={handleLike}>
-              <i className="fa-solid fa-heart"/>
+                <i className="fa-solid fa-heart" />
               </button>
             </div>
           </div>

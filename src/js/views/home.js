@@ -77,6 +77,7 @@ export const Home = () => {
         <h1 className="py-3">Planets</h1>
         <div className="d-flex flex-wrap justify-content-around ">
         {store.planets.map((x)=> <Cards
+            id={x.uid}
             key={x.uid}
             name= {x.name}
             image={imgUrlPlanets(x.uid)}
