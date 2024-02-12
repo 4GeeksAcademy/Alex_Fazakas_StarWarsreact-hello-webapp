@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Cards } from "../component/charactersCards";
+import { Cards } from "../component/generalCards";
 import { Navbar } from "../component/navbar";
 
 import "../../styles/home.css";
@@ -7,100 +7,105 @@ import { Context } from "../store/appContext";
 
 export const Home = () => {
   const [likedCards, setLikedCards] = useState([]);
-  const {store, actions} = useContext(Context);
+  const [apiLoaded, setApiLoaded] = useState(false);
+  const { store, actions } = useContext(Context);
 
-  
-      // UseEffect para los characters
   useEffect(() => {
-    // Obtener los personajes si el tamaño de la lista de personajes es 0
-    if (store.characters.length === 0) {
-      actions.fetchCharacters();
-    }
-  }, [actions, store.characters]);
+    const fetchData = async () => {
+      try {
+        if (store.characters.length === 0) {
+          await actions.fetchCharacters();
+        }
 
-    // UseEffect para los planetas
+        if (store.planets.length === 0) {
+          await actions.fetchPlanets();
+        }
+
+        if (store.vehicles.length === 0) {
+          await actions.fetchVehicles();
+        }
+
+        setApiLoaded(true);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, [actions, store.characters, store.planets, store.vehicles]);
+
+  // Función para manejar el clic en el botón de "Me gusta"
+  const handleLike = (name) => {
+    const updatedLikedCards = [...likedCards, name];
+    // Actualizar el estado local likedCards
+    setLikedCards(updatedLikedCards);
+    // Guardar likedCards en el almacenamiento local
+    localStorage.setItem("likedCards", JSON.stringify(updatedLikedCards));
+  };
+
+  // Cargar likedCards del almacenamiento local al montar el componente
   useEffect(() => {
-    
-    if (store.planets.length === 0) {
-      actions.fetchPlanets();
+    const storedLikedCards = localStorage.getItem("likedCards");
+    if (storedLikedCards) {
+      setLikedCards(JSON.parse(storedLikedCards));
     }
-  }, [actions, store.planets]);
+  }, []);
 
-    // UseEffect para los vehiculos
-  useEffect(() => {
-    
-    if (store.vehicles.length === 0) {
-      actions.fetchVehicles();
-    }
-  }, [actions, store.vehicles]);
-
-  
-
-  const charactersId = store.characters.map ((x)=> x.uid)
-
-  const planetsId = store.planets.map ((x)=> x.uid)
-
-  const vehiclesId = store.vehicles.map ((x)=> x.uid)
-
-  const imgUrlPlanets = (planetsId) => {
-    return `https://starwars-visualguide.com/assets/img/planets/${planetsId === "1" ? "8" : planetsId}.jpg`;
-};
-
-  const imgUrlVehicles = (vehiclesId)=> {
-    return `https://starwars-visualguide.com/assets/img/vehicles/${vehiclesId}.jpg`
-  }
-
-
-  const imgUrl = (charactersId)=> {
-    return `https://starwars-visualguide.com/assets/img/characters/${charactersId}.jpg`
-  }
   return (
+    <div className="text-center">
+      {apiLoaded ? (
+        <>
+          <Navbar likedCards={likedCards} setLikedCards={setLikedCards} />
+          <div className="mt-2">
+            <h1 className="py-3 text-white">Characters</h1>
+            <div className="d-flex flex-wrap justify-content-around mx-4">
+              {store.characters.map((character, index) => (
+                <Cards
+                  key={index}
+                  type="characters"
+                  idNumber={character.uid}
+                  name={character.name}
+                  onLike={handleLike} 
+                />
+              ))}
+            </div>
+          </div>
 
-                  // Characters
-    <div className="text-center ">
-      <Navbar likedCards={likedCards} setLikedCards={setLikedCards} />
-      <div className="mt-2">
-        <h1 className="py-3">Characters</h1>
-        <div className="d-flex flex-wrap justify-content-around mx-4">
-          {store.characters.map((x)=> <Cards
-            key={x.uid}
-            name= {x.name}
-            image={imgUrl(x.uid)}
-            onLike={(name) => setLikedCards([...likedCards, name])}
-          />)}
+          <div className="mt-5 border-top">
+            <h1 className="py-3 text-white">Planets</h1>
+            <div className="d-flex flex-wrap justify-content-around">
+              {store.planets.map((planet) => (
+                <Cards
+                  key={planet.uid}
+                  type="planets"
+                  idNumber={planet.uid}
+                  name={planet.name}
+                  onLike={handleLike} 
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-5 border-top">
+            <h1 className="py-3 text-white">Vehicles</h1>
+            <div className="d-flex flex-wrap justify-content-around">
+              {store.vehicles.map((vehicle) => (
+                <Cards
+                  key={vehicle.uid}
+                  type="vehicles"
+                  idNumber={vehicle.uid}
+                  name={vehicle.name}
+                  onLike={handleLike} 
+                />
+              ))}
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className="d-flex justify-content-center">
+          <div className="loader"></div>
         </div>
-      </div>
-
-                    {/* Planets */}
-
-      <div className="mt-5 border-top">
-        <h1 className="py-3">Planets</h1>
-        <div className="d-flex flex-wrap justify-content-around ">
-        {store.planets.map((x)=> <Cards
-            id={x.uid}
-            key={x.uid}
-            name= {x.name}
-            image={imgUrlPlanets(x.uid)}
-            onLike={(name) => setLikedCards([...likedCards, name])}
-          />)}
-        </div>
-      </div>
-
-                        {/* Vehicles */}
-
-      <div className="mt-5 border-top">
-        <h1 className="py-3">Vehicles</h1>
-        <div className="d-flex flex-wrap justify-content-around ">
-        {store.vehicles.map((x)=> <Cards
-            key={x.uid}
-            name= {x.name}
-            image={imgUrlVehicles(x.uid)}
-            onLike={(name) => setLikedCards([...likedCards, name])}
-          />)}
-        </div>
-      </div>
+      )}
     </div>
-
-    
   );
 };

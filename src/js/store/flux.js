@@ -3,11 +3,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			characters: [],
 			planets: [],
+			vehicles: [],
 			details:[],
-			vehicles: []
+			favs:[],
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
+			// Use getActions to call a function within a function
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
@@ -19,38 +20,43 @@ const getState = ({ getStore, getActions, setStore }) => {
 			changeColor: (index, color) => {
 				//get the store
 				const store = getStore();
-
+  
 				//we have to loop the entire demo array to look for the respective index
 				//and change its color
 				const demo = store.demo.map((elm, i) => {
 					if (i === index) elm.background = color;
 					return elm;
 				});
-
+  
 				//reset the global store
 				setStore({ demo: demo });
 			},
-
-
+  
+  
+			setFavorite: (name) => {
+			  const { favs } = getStore();
+			  setStore({ favs: [...favs, name] });
+		  },
+		  
+  
 			loadItemOnClick: async (pathId, setApiloaded) => {
-				try {
-					const response = await fetch(`https://www.swapi.tech/api${pathId}`);
-					const data = await response.json();
-					// Guardar datos en el store con setStore
-					setStore({ details: data.result || {} }); // Almacenar data.result en lugar de data
-					// Actualizar el estado apiloaded
-					setApiloaded(true);
-				} 
-				catch (error) {
-					console.error("Error fetching details:", error);
-				}
-			},
-
-
-
+			  try {
+				  const response = await fetch(`https://www.swapi.tech/api${pathId}`);
+				  const data = await response.json();
+				  // Guardar datos en el store con setStore
+				  setStore({ details: data.result || {} }); // Almacenar data.result en lugar de data
+				  // Actualizar el estado apiloaded
+				  setApiloaded(true);
+			  } catch (error) {
+				  console.error("Error fetching details:", error);
+			  }
+		  },
+		  
+		  
+  
 			fetchCharacters: async () => {
 				try {
-					// Este endpoint me devuelve todos los contactos de la agenda agenda-diego (mi agenda)
+					// Este endpoint me devuelve todos los contactos de la agenda 
 					const response = await fetch(
 						"https://www.swapi.tech/api/people/"
 					);
@@ -61,10 +67,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error fetching contacts:", error);
 				}
 			},
-
+  
 			fetchPlanets: async () => {
 				try {
-					// Este endpoint me devuelve todos los contactos de la agenda agenda-diego (mi agenda)
+					// Este endpoint me devuelve todos los contactos de la agenda 
 					const response = await fetch(
 						"https://www.swapi.tech/api/planets/"
 					);
@@ -75,7 +81,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error fetching contacts:", error);
 				}
 			},
-
+  
 			fetchVehicles: async () => {
 				try {
 					// Este endpoint me devuelve todos los contactos de la agenda agenda-diego (mi agenda)
@@ -89,9 +95,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error("Error fetching contacts:", error);
 				}
 			},
-
+  
 		}
 	};
-};
-
-export default getState;
+  };
+  
+  export default getState;
